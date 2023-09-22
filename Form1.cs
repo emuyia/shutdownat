@@ -4,78 +4,90 @@ using System.Diagnostics;
 
 namespace shutdownat
 {
-	public partial class Form1 : Form
+	public partial class shutdownat : Form
 	{
-		private Button shutdownButton;
-		private Button cancelButton;
-		private NumericUpDown shutdownTimer;
-		private TextBox logTextBox;
+		private System.Threading.Timer sleepTimer;
 
-		public Form1()
+		public shutdownat()
 		{
 			InitializeComponent();
 
-			this.shutdownButton = new System.Windows.Forms.Button();
-			this.cancelButton = new System.Windows.Forms.Button();
-			this.shutdownTimer = new System.Windows.Forms.NumericUpDown();
-			this.logTextBox = new System.Windows.Forms.TextBox();
-
-			// shutdownButton
-			this.shutdownButton.Location = new System.Drawing.Point(60, 90);
-			this.shutdownButton.Name = "shutdownButton";
-			this.shutdownButton.Size = new System.Drawing.Size(75, 23);
-			this.shutdownButton.TabIndex = 0;
-			this.shutdownButton.Text = "Schedule";
-			this.shutdownButton.UseVisualStyleBackColor = true;
-			this.shutdownButton.Click += new System.EventHandler(this.ShutdownButton_Click);
-
-			// cancelButton
-			this.cancelButton.Location = new System.Drawing.Point(160, 90);
-			this.cancelButton.Name = "cancelButton";
-			this.cancelButton.Size = new System.Drawing.Size(75, 23);
-			this.cancelButton.TabIndex = 1;
-			this.cancelButton.Text = "Cancel";
-			this.cancelButton.UseVisualStyleBackColor = true;
-			this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
-
-			// shutdownTimer
-			this.shutdownTimer.Location = new System.Drawing.Point(60, 40);
-			this.shutdownTimer.Name = "shutdownTimer";
-			this.shutdownTimer.Size = new System.Drawing.Size(175, 20);
-			this.shutdownTimer.TabIndex = 2;
-			this.shutdownTimer.Value = new decimal(new int[] { 1, 0, 0, 0 });
-
-			// logTextBox
-			this.logTextBox.Location = new System.Drawing.Point(10, 130);
-			this.logTextBox.Name = "logTextBox";
-			this.logTextBox.Size = new System.Drawing.Size(280, 20);
-			this.logTextBox.ReadOnly = true;
-
-			this.Controls.Add(this.logTextBox);
-			this.Controls.Add(this.shutdownTimer);
-			this.Controls.Add(this.cancelButton);
-			this.Controls.Add(this.shutdownButton);
+			string ApplicationName = "Shutdown@";
 
 			// Set form properties
-			this.ClientSize = new System.Drawing.Size(300, 150); // Sets size
 			this.FormBorderStyle = FormBorderStyle.FixedSingle; // Makes the form border static
 			this.MaximizeBox = false; // Disables maximize button
 			this.StartPosition = FormStartPosition.CenterScreen; // Starts the form at the center of the screen
-			this.Text = "Shutdown Scheduler";
+			this.Text = ApplicationName;
 			this.ShowIcon = false;
+
+			this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+			this.NotifyIcon.Text = ApplicationName;
+			this.NotifyIcon.Icon = this.Icon;
+			this.NotifyIcon.DoubleClick += this.NotifyIcon_DoubleClick;
+
+			this.Resize += this.Form1_Resize;
+
+			Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			this.VersionLabel.Text = $"{version.Major}.{version.Minor}";
 		}
 
-		private void ShutdownButton_Click(object sender, EventArgs e)
+		// Form1_Resize event handler
+		private void Form1_Resize(object sender, EventArgs e)
 		{
-			int shutdownTimeInSeconds = (int)shutdownTimer.Value * 3600;
+			if (this.WindowState == FormWindowState.Minimized)
+			{
+				this.ShowInTaskbar = false;
+				this.NotifyIcon.Visible = true;
+			}
+		}
+
+		// NotifyIcon_DoubleClick event handler
+		private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+		{
+			this.WindowState = FormWindowState.Normal;
+			this.ShowInTaskbar = true;
+			this.NotifyIcon.Visible = false;
+		}
+
+		private void SleepBtn_Click(object sender, EventArgs e)
+		{
+			// Cancel any existing shutdown or sleep
+			this.StopBtn_Click(sender, e);
+
+			int sleepTimeInSeconds = ((int)HoursNum.Value * 3600) + ((int)MinutesNum.Value * 60);
+			this.LogTextBox.Text = $"This computer will sleep in {HoursNum.Value} hour(s) and {MinutesNum.Value} minute(s).";
+
+			// Initialize a new Timer that will put the computer to sleep after the specified delay
+			this.sleepTimer = new System.Threading.Timer((obj) =>
+			{
+				Process.Start("rundll32.exe", "powrprof.dll,SetSuspendState 0,1,0");
+			}, null, sleepTimeInSeconds * 1000, System.Threading.Timeout.Infinite);
+		}
+
+		private void ShutdownBtn_Click(object sender, EventArgs e)
+		{
+			// Cancel any existing shutdown or sleep
+			this.StopBtn_Click(sender, e);
+
+			int shutdownTimeInSeconds = ((int)HoursNum.Value * 3600) + ((int)MinutesNum.Value * 60);
 			Process.Start("shutdown", $"/s /t {shutdownTimeInSeconds}");
-			this.logTextBox.Text = $"Shutdown scheduled in {shutdownTimer.Value} hour(s)";
+			this.LogTextBox.Text = $"This computer will shutdown in {HoursNum.Value} hour(s) and {MinutesNum.Value} minute(s).";
 		}
 
-		private void CancelButton_Click(object sender, EventArgs e)
+		private void StopBtn_Click(object sender, EventArgs e)
 		{
+			// Cancel shutdown
 			Process.Start("shutdown", "/a");
-			this.logTextBox.Text = "Shutdown cancelled";
+
+			if (this.sleepTimer != null)
+			{
+				// Cancel the sleep timer
+				this.sleepTimer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+				this.sleepTimer = null;
+			}
+
+			this.LogTextBox.Text = "Schedule cancelled.";
 		}
 	}
 }

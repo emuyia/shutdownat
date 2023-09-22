@@ -6,6 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>shut_down_normal-4.ico</ApplicationIcon>
+    <Version>1.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="shut_down_normal-4.ico" />
+  </ItemGroup>
 
 </Project>
