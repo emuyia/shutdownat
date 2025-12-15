@@ -48,10 +48,10 @@
 			// SleepBtn
 			// 
 			SleepBtn.ForeColor = SystemColors.ControlText;
-			SleepBtn.Location = new Point(47, 60);
+			SleepBtn.Location = new Point(42, 120);
 			SleepBtn.Margin = new Padding(3, 2, 3, 2);
 			SleepBtn.Name = "SleepBtn";
-			SleepBtn.Size = new Size(64, 26);
+			SleepBtn.Size = new Size(186, 48);
 			SleepBtn.TabIndex = 0;
 			SleepBtn.Text = "Sleep";
 			SleepBtn.UseVisualStyleBackColor = true;
@@ -60,10 +60,10 @@
 			// ShutdownBtn
 			// 
 			ShutdownBtn.ForeColor = SystemColors.ControlText;
-			ShutdownBtn.Location = new Point(111, 60);
+			ShutdownBtn.Location = new Point(347, 120);
 			ShutdownBtn.Margin = new Padding(3, 2, 3, 2);
 			ShutdownBtn.Name = "ShutdownBtn";
-			ShutdownBtn.Size = new Size(75, 26);
+			ShutdownBtn.Size = new Size(205, 48);
 			ShutdownBtn.TabIndex = 1;
 			ShutdownBtn.Text = "Shutdown";
 			ShutdownBtn.UseVisualStyleBackColor = true;
@@ -72,10 +72,10 @@
 			// StopBtn
 			// 
 			StopBtn.ForeColor = SystemColors.ControlText;
-			StopBtn.Location = new Point(186, 60);
+			StopBtn.Location = new Point(663, 120);
 			StopBtn.Margin = new Padding(3, 2, 3, 2);
 			StopBtn.Name = "StopBtn";
-			StopBtn.Size = new Size(64, 26);
+			StopBtn.Size = new Size(189, 48);
 			StopBtn.TabIndex = 2;
 			StopBtn.Text = "Stop";
 			StopBtn.UseVisualStyleBackColor = true;
@@ -83,49 +83,49 @@
 			// 
 			// HoursNum
 			// 
-			HoursNum.Location = new Point(106, 28);
+			HoursNum.Location = new Point(288, 36);
 			HoursNum.Margin = new Padding(3, 2, 3, 2);
 			HoursNum.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
 			HoursNum.Name = "HoursNum";
-			HoursNum.Size = new Size(36, 22);
+			HoursNum.Size = new Size(76, 33);
 			HoursNum.TabIndex = 3;
 			// 
 			// LogTextBox
 			// 
-			LogTextBox.Location = new Point(10, 95);
+			LogTextBox.Location = new Point(11, 201);
 			LogTextBox.Margin = new Padding(3, 2, 3, 2);
 			LogTextBox.Multiline = true;
 			LogTextBox.Name = "LogTextBox";
 			LogTextBox.ReadOnly = true;
-			LogTextBox.Size = new Size(272, 35);
+			LogTextBox.Size = new Size(892, 62);
 			LogTextBox.TabIndex = 4;
 			// 
 			// HoursLabel
 			// 
 			HoursLabel.AutoSize = true;
-			HoursLabel.Location = new Point(104, 13);
+			HoursLabel.Location = new Point(370, 36);
 			HoursLabel.Name = "HoursLabel";
-			HoursLabel.Size = new Size(38, 13);
+			HoursLabel.Size = new Size(64, 28);
 			HoursLabel.TabIndex = 5;
 			HoursLabel.Text = "Hours";
 			// 
 			// MinutesLabel
 			// 
 			MinutesLabel.AutoSize = true;
-			MinutesLabel.Location = new Point(150, 13);
+			MinutesLabel.Location = new Point(542, 36);
 			MinutesLabel.Name = "MinutesLabel";
-			MinutesLabel.Size = new Size(49, 13);
+			MinutesLabel.Size = new Size(82, 28);
 			MinutesLabel.TabIndex = 7;
 			MinutesLabel.Text = "Minutes";
 			// 
 			// MinutesNum
 			// 
-			MinutesNum.Location = new Point(156, 28);
+			MinutesNum.Location = new Point(460, 36);
 			MinutesNum.Margin = new Padding(3, 2, 3, 2);
 			MinutesNum.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
 			MinutesNum.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
 			MinutesNum.Name = "MinutesNum";
-			MinutesNum.Size = new Size(36, 22);
+			MinutesNum.Size = new Size(76, 33);
 			MinutesNum.TabIndex = 6;
 			MinutesNum.Value = new decimal(new int[] { 1, 0, 0, 0 });
 			// 
@@ -133,9 +133,9 @@
 			// 
 			label1.AutoSize = true;
 			label1.Font = new Font("MS Gothic", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-			label1.Location = new Point(12, 137);
+			label1.Location = new Point(228, 297);
 			label1.Name = "label1";
-			label1.Size = new Size(268, 11);
+			label1.Size = new Size(449, 20);
 			label1.TabIndex = 8;
 			label1.Text = "a siwwy wittwe pwogwam by june (´◡ ‿ ゝ◡ `)";
 			// 
@@ -148,18 +148,18 @@
 			// VersionLabel
 			// 
 			VersionLabel.AutoSize = true;
-			VersionLabel.Location = new Point(10, 10);
+			VersionLabel.Location = new Point(865, 293);
 			VersionLabel.Name = "VersionLabel";
-			VersionLabel.Size = new Size(22, 13);
+			VersionLabel.Size = new Size(38, 28);
 			VersionLabel.TabIndex = 9;
-			VersionLabel.Text = "1.0";
+			VersionLabel.Text = "1.2";
 			// 
 			// shutdownat
 			// 
-			AutoScaleDimensions = new SizeF(6F, 13F);
+			AutoScaleDimensions = new SizeF(11F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = Color.FromArgb(64, 64, 64);
-			ClientSize = new Size(294, 156);
+			ClientSize = new Size(916, 333);
 			Controls.Add(VersionLabel);
 			Controls.Add(label1);
 			Controls.Add(MinutesLabel);
